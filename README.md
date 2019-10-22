@@ -1,2 +1,2 @@
 # gulp-demo
-gulp脚手架
+ES6开源库 gulp脚手架

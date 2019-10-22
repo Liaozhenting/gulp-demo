@@ -1,34 +1,38 @@
 const gulp = require("gulp");
+const rollup = require("gulp-better-rollup");
+const babel = require("rollup-plugin-babel");
+const resolve = require("rollup-plugin-node-resolve");
+const commonjs = require("rollup-plugin-commonjs");
+const uglify = require("rollup-plugin-uglify");
+const sourcemaps = require("gulp-sourcemaps");
 const browserSync = require("browser-sync").create();
-var sourceMap = require("gulp-sourcemaps");
-var concat = require("gulp-concat");
-var uglify = require("gulp-uglify");
-var babel = require("gulp-babel");
-const reload = browserSync.reload;
 
-// 任务：拷贝html
-gulp.task("copyHtml", function() {
-  // 选取到src目录下的所有html文件 （为了测试效果，请自己再src目录下随便创建两个html文件咯）
-  gulp.src("./index.html").pipe(gulp.dest("dist")); // 将html拷贝到dist目录下，没有dist会自动生成
-});
+gulp.task("babel", () => {
+  return gulp.src("src/index.js")
+    .pipe(sourcemaps.init())
+    .pipe(rollup({
+      plugins: [
+        commonjs(),
+        resolve(),
+        babel({
+          runtimeHelpers: true
+        }),
+        uglify.uglify()
+      ]
+    },{
+      format: "iife"
+    }))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest("dist/"))
+})
 
-gulp.task("sourceMap", function() {
-  gulp
-    .src("./src/*.js")
-    .pipe(
-      babel()
-    )
-    .pipe(sourceMap.init())
-    .pipe(concat("all.js"))
-    .pipe(uglify())
-    .pipe(sourceMap.write("./maps/", { addComment: false }))
-    .pipe(gulp.dest("./dist"));
-});
+gulp.task("watch", () => {
+	gulp.watch("src/**/*", gulp.series(["babel"]))
+})
 
-/*实时监控*/
-gulp.task("watch", function() {
-  browserSync.init({
-    files: ["./src/*.js"],
+gulp.task("dev", () => {
+	browserSync.init({
+    files: ["./dist/**/*"],
     logLevel: "debug",
     logPrefix: "insgeek",
     server: {
@@ -43,7 +47,9 @@ gulp.task("watch", function() {
       scroll: true
     },
     browser: "chrome"
-  });
-});
+  })
+})
 
-gulp.task("default", ["copyHtml", "sourceMap", "watch"]);
+
+
+gulp.task("default", gulp.series(["babel", "watch"]))

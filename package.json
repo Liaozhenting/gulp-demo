@@ -1,24 +1,28 @@
 {
-  "name": "gulp-demo",
+  "name": "gulps",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "dev": "gulp dev"
   },
-  "author": "",
+  "author": "lv",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/runtime-corejs2": "^7.4.4",
     "browser-sync": "^2.26.7",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.4.0",
+    "core-js": "^2.6.5",
+    "gulp": "^4.0.1",
+    "gulp-better-rollup": "^4.0.1",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.1"
+    "rollup": "^1.10.1",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }
