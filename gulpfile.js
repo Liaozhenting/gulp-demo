@@ -29,6 +29,26 @@ gulp.task("babel", () => {
     .pipe(gulp.dest("dist/"))
 })
 
+gulp.task("build", () => {
+  return gulp.src("src/index.js")
+    .pipe(sourcemaps.init())
+    .pipe(rollup({
+      plugins: [
+        commonjs({include: /node_modules/}),
+        resolve(),
+        babel({
+          runtimeHelpers: true,
+          exclude: /node_modules/,
+          plugins: [['@babel/transform-runtime', { useESModules: true }]]
+        })
+      ]
+    },{
+      format: "cjs",
+      file: `my-module.js`
+    }))
+    .pipe(gulp.dest("build/"))
+})
+
 gulp.task("watch", () => {
 	gulp.watch("src/**/*", gulp.series(["babel"]))
 })
