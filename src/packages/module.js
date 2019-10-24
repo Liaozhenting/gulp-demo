@@ -1,8 +1,5 @@
-export const unique = arr => [...new Set(arr)];
-
-
-
-
+const unique = arr => [...new Set(arr)];
+export default unique;
 /*********************************************/
 /**  index.js */
 // import { unique } from "./packages/module";

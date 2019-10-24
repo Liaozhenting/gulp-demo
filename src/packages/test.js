@@ -1,0 +1,1 @@
+export {default as unique} from './module'

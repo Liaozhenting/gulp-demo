@@ -12,15 +12,18 @@ gulp.task("babel", () => {
     .pipe(sourcemaps.init())
     .pipe(rollup({
       plugins: [
-        commonjs(),
+        commonjs({include: /node_modules/}),
         resolve(),
         babel({
-          runtimeHelpers: true
+          runtimeHelpers: true,
+          exclude: /node_modules/,
+          plugins: [['@babel/transform-runtime', { useESModules: true }]]
         }),
         uglify.uglify()
       ]
     },{
-      format: "iife"
+      format: "umd",
+      file: `my-module.js`
     }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest("dist/"))
