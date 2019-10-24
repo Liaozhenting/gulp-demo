@@ -1,13 +1,13 @@
 {
-  "name": "gulps",
+  "name": "gulp-rollup-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "gulp",
-    "dev": "gulp dev"
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
-  "author": "lv",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.4",

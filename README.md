@@ -7,3 +7,8 @@ npm start
 npm run dev
 ```
 浏览器进入[localhost:3000](http://localhost:3000)调试
+
+## 打包
+```
+npm run build
+```
