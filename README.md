@@ -5,6 +5,9 @@ ES6开源库 gulp脚手架
 ## 使用
 ```
 npm start
+```
+另起一个命令行
+```
 npm run dev
 ```
 浏览器进入[localhost:3000](http://localhost:3000)调试
