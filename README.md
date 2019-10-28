@@ -1,5 +1,5 @@
 # gulp-demo
-ES6开源库 gulp脚手架
+调试ES6格式开源库的gulp脚手架
 基于项目 [https://github.com/JofunLiang/gulp-translation-es6-demo](gulp-translation-es6-demo)
 
 ## 使用
