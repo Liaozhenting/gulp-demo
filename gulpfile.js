@@ -8,62 +8,74 @@ const replace = require("rollup-plugin-replace");
 const sourcemaps = require("gulp-sourcemaps");
 const browserSync = require("browser-sync").create();
 
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV;
 
 gulp.task("babel", () => {
-  return gulp.src("src/index.js")
+  return gulp
+    .src("src/index.js")
     .pipe(sourcemaps.init())
-    .pipe(rollup({
-      plugins: [
-        commonjs({include: /node_modules/}),
-        resolve(),
-        babel({
-          runtimeHelpers: true,
-          exclude: /node_modules/,
-          plugins: [['@babel/transform-runtime', { useESModules: true }]]
-        }),
-	replace({
-          'process.env.NODE_ENV': JSON.stringify(env)
-        }),
-        // uglify.uglify()
-      ]
-    },{
-      format: "umd",
-      file: `my-module.js`
-    }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest("dist/"))
-})
+    .pipe(
+      rollup(
+        {
+          plugins: [
+            commonjs({ include: /node_modules/ }),
+            resolve(),
+            babel({
+              runtimeHelpers: true,
+              exclude: /node_modules/,
+              plugins: [["@babel/transform-runtime", { useESModules: true }]]
+            }),
+            replace({
+              "process.env.NODE_ENV": JSON.stringify(env)
+            })
+            // uglify.uglify()
+          ]
+        },
+        {
+          format: "iife",
+          file: `my-module.js`
+        }
+      )
+    )
+    .pipe(sourcemaps.write("./"))
+    .pipe(gulp.dest("dist/"));
+});
 
 gulp.task("build", () => {
-  return gulp.src("src/index.js")
+  return gulp
+    .src("src/index.js")
     .pipe(sourcemaps.init())
-    .pipe(rollup({
-      plugins: [
-        commonjs({include: /node_modules/}),
-        resolve(),
-        babel({
-          runtimeHelpers: true,
-          exclude: /node_modules/,
-          plugins: [['@babel/transform-runtime', { useESModules: true }]]
-        }),
-	replace({
-          'process.env.NODE_ENV': JSON.stringify(env)
-        })
-      ]
-    },{
-      format: "cjs",
-      file: `my-module.js`
-    }))
-    .pipe(gulp.dest("build/"))
-})
+    .pipe(
+      rollup(
+        {
+          plugins: [
+            commonjs({ include: /node_modules/ }),
+            resolve(),
+            babel({
+              runtimeHelpers: true,
+              exclude: /node_modules/,
+              plugins: [["@babel/transform-runtime", { useESModules: true }]]
+            }),
+            replace({
+              "process.env.NODE_ENV": JSON.stringify(env)
+            })
+          ]
+        },
+        {
+          format: "iife",
+          file: `my-module.js`
+        }
+      )
+    )
+    .pipe(gulp.dest("build/"));
+});
 
 gulp.task("watch", () => {
-	gulp.watch("src/**/*", gulp.series(["babel"]))
-})
+  gulp.watch("src/**/*", gulp.series(["babel"]));
+});
 
 gulp.task("dev", () => {
-	browserSync.init({
+  browserSync.init({
     files: ["./dist/**/*"],
     logLevel: "debug",
     logPrefix: "insgeek",
@@ -79,9 +91,7 @@ gulp.task("dev", () => {
       scroll: true
     },
     browser: "chrome"
-  })
-})
+  });
+});
 
-
-
-gulp.task("default", gulp.series(["babel", "watch"]))
+gulp.task("default", gulp.series(["babel", "watch"]));
