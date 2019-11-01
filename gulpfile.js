@@ -4,8 +4,11 @@ const babel = require("rollup-plugin-babel");
 const resolve = require("rollup-plugin-node-resolve");
 const commonjs = require("rollup-plugin-commonjs");
 const uglify = require("rollup-plugin-uglify");
+const replace = require("rollup-plugin-replace");
 const sourcemaps = require("gulp-sourcemaps");
 const browserSync = require("browser-sync").create();
+
+const env = process.env.NODE_ENV
 
 gulp.task("babel", () => {
   return gulp.src("src/index.js")
@@ -19,7 +22,10 @@ gulp.task("babel", () => {
           exclude: /node_modules/,
           plugins: [['@babel/transform-runtime', { useESModules: true }]]
         }),
-        uglify.uglify()
+	replace({
+          'process.env.NODE_ENV': JSON.stringify(env)
+        }),
+        // uglify.uglify()
       ]
     },{
       format: "umd",
@@ -40,6 +46,9 @@ gulp.task("build", () => {
           runtimeHelpers: true,
           exclude: /node_modules/,
           plugins: [['@babel/transform-runtime', { useESModules: true }]]
+        }),
+	replace({
+          'process.env.NODE_ENV': JSON.stringify(env)
         })
       ]
     },{
