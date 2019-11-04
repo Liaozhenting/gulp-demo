@@ -13,9 +13,9 @@
     "@babel/core": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "@babel/runtime-corejs2": "^7.4.4",
+    "@babel/runtime-corejs2": "^7.6.3",
     "browser-sync": "^2.26.7",
-    "core-js": "^2.6.5",
+    "core-js": "^2.6.10",
     "gulp": "^4.0.1",
     "gulp-better-rollup": "^4.0.1",
     "gulp-sourcemaps": "^2.6.5",
@@ -25,5 +25,8 @@
     "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-uglify": "^6.0.2"
+  },
+  "dependencies": {
+    "history": "^4.10.1"
   }
 }

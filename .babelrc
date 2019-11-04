@@ -4,7 +4,7 @@
       "@babel/env",
       {
         "targets":{
-          "chrome": "78"
+          "browsers": "last 2 versions, > 1%, ie >= 9"
         },
         "modules": false
       }

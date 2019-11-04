@@ -18,13 +18,12 @@ gulp.task("babel", () => {
       rollup(
         {
           plugins: [
-            commonjs({ include: /node_modules/ }),
+            commonjs(),
             resolve(),
             babel({
-              runtimeHelpers: true,
-              exclude: /node_modules/,
-              plugins: [["@babel/transform-runtime", { useESModules: true }]]
+              runtimeHelpers: true
             }),
+            // fix 'process is not defined'
             replace({
               "process.env.NODE_ENV": JSON.stringify(env)
             })
@@ -44,26 +43,28 @@ gulp.task("babel", () => {
 gulp.task("build", () => {
   return gulp
     .src("src/index.js")
-    .pipe(sourcemaps.init())
     .pipe(
       rollup(
         {
+          external: ['history'], // 声明不要把这个node_modules库的代码打包进去,格式是external: [module1,module2...]
           plugins: [
-            commonjs({ include: /node_modules/ }),
+            commonjs(),
             resolve(),
             babel({
               runtimeHelpers: true,
-              exclude: /node_modules/,
-              plugins: [["@babel/transform-runtime", { useESModules: true }]]
+              exclude: "/node_modules/**",
+              plugins: [["@babel/transform-runtime", { useESModules: true }]],
+              presets: [["@babel/preset-env", { targets: { esmodules: true } }]]
             }),
+
             replace({
               "process.env.NODE_ENV": JSON.stringify(env)
             })
           ]
         },
         {
-          format: "iife",
-          file: `my-module.js`
+          format: "esm",
+          file: `my-module.esm.js`
         }
       )
     )
