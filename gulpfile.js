@@ -40,37 +40,6 @@ gulp.task("babel", () => {
     .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build", () => {
-  return gulp
-    .src("src/index.js")
-    .pipe(
-      rollup(
-        {
-          external: ['history'], // 声明不要把这个node_modules库的代码打包进去,格式是external: [module1,module2...]
-          plugins: [
-            commonjs(),
-            resolve(),
-            babel({
-              runtimeHelpers: true,
-              exclude: "/node_modules/**",
-              plugins: [["@babel/transform-runtime", { useESModules: true }]],
-              presets: [["@babel/preset-env", { targets: { esmodules: true } }]]
-            }),
-
-            replace({
-              "process.env.NODE_ENV": JSON.stringify(env)
-            })
-          ]
-        },
-        {
-          format: "esm",
-          file: `my-module.esm.js`
-        }
-      )
-    )
-    .pipe(gulp.dest("build/"));
-});
-
 gulp.task("watch", () => {
   gulp.watch("src/**/*", gulp.series(["babel"]));
 });
